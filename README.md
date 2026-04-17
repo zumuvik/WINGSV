@@ -27,6 +27,70 @@
 - работать с `Xray` профилями и подписками
 - переключаться через launcher actions, внешние intents и Quick Settings tiles
 
+## Архитектура
+
+```
+WINGS V (Android VPN клиент)
+├── app/                     # Main Android приложение
+│   └── src/main/java/wings/v/
+│       ├── core/            # Бизнес-логика (50 файлов)
+│       │   ├── AppPrefs.java           # Preferences хранилище
+│       │   ├── WingsImportParser.java  # Импорт конфигов
+│       │   ├── AutoSearchManager.java  # Автопоиск серверов
+│       │   ├── XrayStore.java           # Xray профили и подписки
+│       │   └── ...
+│       ├── service/        # VPN сервисы (12 файлов)
+│       │   ├── ProxyTunnelService.java # Главный VPN сервис (278KB)
+│       │   ├── XrayVpnService.java      # Xray VPN интеграция
+│       │   └── ...
+│       ├── ui/             # UI фрагменты (18 файлов)
+│       │   ├── MainActivity.java       # Точка входа
+│       │   ├── HomeFragment.java       # Главный экран
+│       │   ├── ProfilesFragment.java    # Управление профилями
+│       │   └── ...
+│       ├── activity/       # Activities
+│       ├── xray/           # Xray интеграция
+│       ├── xposed/         # Xposed модуль
+│       ├── qs/             # Quick Settings tiles
+│       └── receiver/       # Broadcast receivers
+│
+└── external/               # Submodules (8 штук)
+    ├── vk-turn-proxy       # VK TURN клиент (Go, нативный)
+    ├── libXray             # Xray Go bindings (gomobile)
+    ├── Xray-core           # Xray core
+    ├── amneziawg-android   # AmneziaWG tunnel
+    ├── VPNHotspot          # Root tethering
+    ├── byedpi              # DPI обход
+    └── librustoreparser    # RuStore парсер
+```
+
+### Ключевые модули
+
+| Модуль | Размер | Описание |
+|--------|--------|----------|
+| **ProxyTunnelService** | 278KB | Главный VPN сервис |
+| **WingsImportParser** | 68KB | Импорт конфигов (wingsv://, vless://) |
+| **AutoSearchManager** | 80KB | Автопоиск серверов |
+| **AppPrefs** | 56KB | Preferences хранилище |
+| **XrayStore** | 29KB | Xray профили и подписки |
+
+### Backend типы
+
+| Тип | Описание |
+|-----|----------|
+| **VK TURN + WireGuard** | Обычный VPN режим через VpnService |
+| **Xray/VLESS** | Прокси протокол (VLESS, VMESS, Trojan) |
+| **VK TURN + AmneziaWG** | WireGuard-совместимый протокол |
+| **Root mode** | Раздача через Wi-Fi/USB/BT/Ethernet |
+
+### Зависимости
+
+- **Java 17**, Android SDK 36, NDK
+- **OneUI/SESL 8** — Samsung интерфейс
+- **WireGuard Android** tunnel library
+- **Go 1.25-1.26** — сборка нативных библиотек
+- **Protobuf** — сериализация конфигов
+
 ## Панель 3x-ui с встроенным vk-turn-proxy
 В качестве сервера, вы можете использовать эту [панель 3x-ui](https://github.com/WINGS-N/3x-ui), в которой уже вшит vk-turn-proxy как inbound
 
