@@ -78,9 +78,9 @@ WINGS V (Android VPN клиент)
 
 | Тип | Описание |
 |-----|----------|
-| **VK TURN + WireGuard** | Обычный VPN режим через VpnService |
-| **Xray/VLESS** | Прокси протокол (VLESS, VMESS, Trojan) |
-| **VK TURN + AmneziaWG** | WireGuard-совместимый протокол |
+| **Xray/VLESS** | VPN режим через VpnService (VLESS, VMESS, Trojan) |
+| **VK TURN + WireGuard** | VPN режим через VpnService |
+| **VK TURN + AmneziaWG** | VPN режим через VpnService |
 | **Root mode** | Раздача через Wi-Fi/USB/BT/Ethernet |
 
 ### Зависимости
