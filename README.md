@@ -112,16 +112,6 @@ WINGS V (Android VPN клиент)
   - `VK TURN + AmneziaWG` конфиг
 - Старый JSON вариант - legacy
 
-## Что используется
-
-- Java для основного приложения
-- OneUI / SESL 8 для интерфейса
-- `com.wireguard.android:tunnel` для WireGuard
-- `external/vk-turn-proxy` для native `VK TURN` клиента
-- `external/libXray` + `external/Xray-core` для `Xray`
-- `external/amneziawg-android` для `VK TURN + AmneziaWG`
-- `external/VPNHotspot` для root раздачи
-
 ## Сборка
 
 Нужно задать credentials для SESL GitHub Packages вне репозитория:
